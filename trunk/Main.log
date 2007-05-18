@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2007-05-17T18:14:25</date>
+  <millis>1179447265390</millis>
+  <sequence>0</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Loading properties</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:25</date>
+  <millis>1179447265546</millis>
+  <sequence>1</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Successfully loaded properties file</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:25</date>
+  <millis>1179447265546</millis>
+  <sequence>2</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Loading user interface</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:25</date>
+  <millis>1179447265843</millis>
+  <sequence>3</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Created new Web Scraper Agent</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:25</date>
+  <millis>1179447265859</millis>
+  <sequence>4</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Getting source for http://www.vehix.com</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:31</date>
+  <millis>1179447271500</millis>
+  <sequence>5</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Parsing web page source</message>
+</record>
+<record>
+  <date>2007-05-17T18:14:31</date>
+  <millis>1179447271781</millis>
+  <sequence>6</sequence>
+  <level>INFO</level>
+  <class>org.lane.desktopagent.reporting.DesktopAgentLogger</class>
+  <method>info</method>
+  <thread>10</thread>
+  <message>Finished parsing web page source</message>
+</record>
