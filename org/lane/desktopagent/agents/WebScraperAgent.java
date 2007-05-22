@@ -35,10 +35,12 @@ public class WebScraperAgent {
 	
 	private HTMLElement parseWebPage(String pageSource) {
 		Main.logger.info(Main.DEFAULT, "Parsing web page source");
+		HTMLElement rootElement = new HTMLElement();
 		HTMLElement tempPageHTML = new HTMLElement();
 		
 		int offset = 0;
 		while(offset < pageSource.length()) {
+			// Get next HTML tag
 			int beginNextHTMLElement = pageSource.indexOf("<", offset);
 			
 			if((beginNextHTMLElement < pageSource.length()) && (beginNextHTMLElement > -1)) {
@@ -47,6 +49,31 @@ public class WebScraperAgent {
 				if((presumedEndNextHTMLElement < pageSource.length()) && (presumedEndNextHTMLElement >= 0)) {
 					String nextHTMLElement = pageSource.substring(beginNextHTMLElement, presumedEndNextHTMLElement);
 					
+					// Create HTML element by adding tag name and attributes
+					String elementElements[] = nextHTMLElement.split(" ");
+					tempPageHTML.setElementTag(elementElements[0].substring(1, (elementElements[0].length() - 1)));
+					
+					if((nextHTMLElement.indexOf("/>") > -1)) {
+						tempPageHTML.setElementClosed(true);
+					}
+					
+					int intAttributeCounter = 1;
+					while(intAttributeCounter < elementElements.length) {
+						String attributeParts[] = elementElements[intAttributeCounter].split("=");
+						if((attributeParts[1].substring((attributeParts[1].length() - 1))).equals(">")) {
+							attributeParts[1] = attributeParts[1].substring(0, (attributeParts[1].length() - 2));
+						}
+						
+						if(attributeParts.length == 2) {
+							tempPageHTML.addAttribute(attributeParts[0], attributeParts[1]);
+						} else {
+							Main.logger.warning(Main.DEFAULT, "Could not add attribute " + elementElements[intAttributeCounter]);
+						}
+						
+						++intAttributeCounter;
+					}
+					
+					// Get inner HTML
 					if(!nextHTMLElement.equalsIgnoreCase("<html>")) {
 						int presumedBeginNextHTMLElement = pageSource.indexOf("<", presumedEndNextHTMLElement);
 						
@@ -55,6 +82,8 @@ public class WebScraperAgent {
 						}
 		
 						String innerHTML = pageSource.substring(presumedEndNextHTMLElement, presumedBeginNextHTMLElement);
+						tempPageHTML.setInnerText(innerHTML);
+						
 						System.out.println("HTML Element: " + nextHTMLElement);
 						System.out.println("Inner HTML: " + innerHTML);
 						offset = presumedEndNextHTMLElement + innerHTML.length();
@@ -67,10 +96,14 @@ public class WebScraperAgent {
 			} else {
 				offset = pageSource.length();
 			}
+			
+			if(tempPageHTML.getElementTag().indexOf("<html>") > -1) {
+				rootElement = tempPageHTML;
+			}
 		}
 		
 		Main.logger.info(Main.DEFAULT, "Finished parsing web page source");
-		return tempPageHTML;
+		return rootElement;
 	}
 	
 	private String getWebPageSource(String url) {
@@ -116,13 +149,17 @@ public class WebScraperAgent {
 	
 	private class HTMLElement {
 		
+		private boolean elementClosed;
 		private Hashtable<String, String> attributes;
 		private String innerText;
+		private String elementTag;
 		private ArrayList<HTMLElement> innerHTML;
 		
 		public HTMLElement() {
+			elementClosed = false;
 			attributes = new Hashtable<String, String>();
 			innerText = new String("");
+			elementTag = new String("");
 			innerHTML = new ArrayList<HTMLElement>();
 		}
 		
@@ -131,11 +168,39 @@ public class WebScraperAgent {
 		}
 		
 		public void setInnerText(String strInnerText) {
-			innerText = strInnerText;
+			innerText += strInnerText;
+		}
+		
+		public void setElementTag(String strElementTag) {
+			elementTag = strElementTag;
 		}
 		
 		public void addInnerHTMLElement(HTMLElement htmlElement) {
 			innerHTML.add(htmlElement);
+		}
+		
+		public void setElementClosed(boolean blnElementClosed) {
+			elementClosed = blnElementClosed;
+		}
+		
+		public String getAttribute(String attribute) {
+			return (String)attributes.get(attribute);
+		}
+		
+		public String getInnerText() {
+			return innerText;
+		}
+		
+		public String getElementTag() {
+			return elementTag;
+		}
+		
+		public ArrayList<HTMLElement> getInnerHTML() {
+			return innerHTML;
+		}
+		
+		public boolean isElementClosed() {
+			return elementClosed;
 		}
 		
 	}

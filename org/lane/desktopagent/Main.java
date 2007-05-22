@@ -44,7 +44,7 @@ public class Main {
 	public int runDesktopAgent() {
 		int result = 0;
 		
-		WebScraperAgent wsa = new WebScraperAgent("http://www.vehix.com");
+		WebScraperAgent wsa = new WebScraperAgent("http://www.csszengarden.com/");
 		
 		return result;
 	}
